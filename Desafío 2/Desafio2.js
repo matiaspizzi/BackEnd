@@ -8,6 +8,8 @@ class Contenedor{
         this.nombre = nombre;
     }
 
+
+
     async save(obj){
         const found = arrayObj.find(e => e == obj);
         if(found){
@@ -39,7 +41,6 @@ class Contenedor{
             console.log(`getAll: ERROR DE LECTURA ${err}`);
             return null;
         })      
-             
     }
     
     async getById(id){
@@ -91,14 +92,7 @@ class Contenedor{
 
 const Productos = new Contenedor("Productos");
 
-
-const prueba = Productos.getAll()
-console.log("PRUEBA------------------------")
-console.log(prueba)
-
 const arrayObj = []
-
-
 
 const obj1 = {
     title: "Producto1",
@@ -136,18 +130,14 @@ const obj6 = {
     thumbnail: "xxx"
 }
 
-// Productos.save(obj1)
-// Productos.save(obj2)
-// Productos.save(obj3)
-// Productos.save(obj4)
-// Productos.save(obj4)
-// Productos.save(obj5)
-// Productos.save(obj6)
+Productos.save(obj1)
+Productos.save(obj2)
+Productos.save(obj3)
+Productos.save(obj4)
+Productos.save(obj4)
+Productos.save(obj5)
+Productos.save(obj6)
 
-// Productos.getAll()
-// Productos.getById(13)
-// Productos.deleteById(3)
-// Productos.deleteAll()
 
 
 
