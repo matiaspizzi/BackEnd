@@ -78,6 +78,3 @@ app.use("/api/productos", productos);
 app.listen(8080, (req, res) => {
     console.log(`Example app listening at http://localhost:8080`);
 });
-
-
-//formulario en clase 8 tiempo 01:05 aprox
