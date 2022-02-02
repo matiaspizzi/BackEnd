@@ -37,13 +37,10 @@ app.get('/', (req, res) => {
 productos.get("/:id", (req, res) => {
     const id = req.params.id;
     const prod = arrayProductos.find((e) => e.id == id);
-    if (!prod) {
-        res.status(404).json({ error: "producto no encontrado" });
-    }
-    res.render('datos', prod)
+    res.render('datos', {prod})
 });
 
-productos.post("/productos", (req, res) => {
+productos.post("/", (req, res) => {
     const title = req.body.title;
     const price = req.body.price;
     const thumbnail = req.body.thumbnail;

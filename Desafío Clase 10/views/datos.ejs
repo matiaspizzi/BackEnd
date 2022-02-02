@@ -1,6 +1,11 @@
-<h1>Datos</h1>
-<ul>
-    <li>{{title}}</li>
-    <li>{{price}}</li>
-    <li>{{id}}</li>
-</ul>
+
+<% if(prod != undefined){ %>
+    <div>
+        <ul><%=prod.title%></li>
+        <ul><%=prod.price%></li>
+        <ul><%=prod.thumbnail%></li>
+        <ul><%=prod.id%></li>
+    </div>
+<% } else { %>
+    <h3 class="alert alert-danger"> No se encontraron datos</h3>
+<% } %>
