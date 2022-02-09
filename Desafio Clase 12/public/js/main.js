@@ -19,7 +19,7 @@ socket.on('productos', productos => {
 });
 
 function showProducts(productos) {
-    return fetch('../views/partials/historialProductos.hbs')
+    return fetch('../../views/partials/historialProductos.hbs')
         .then(respuesta => respuesta.text())
         .then(plantilla => {
             const template = Handlebars.compile(plantilla);
