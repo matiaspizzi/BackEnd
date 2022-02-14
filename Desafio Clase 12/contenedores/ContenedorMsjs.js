@@ -7,7 +7,7 @@ class ContenedorMsjs{
 
     async getAll(){
         try {
-            const objs = await fs.readFile(this.ruta = ruta, 'utf-8')
+            const objs = await fs.readFile(this.ruta, 'utf-8')
             return JSON.parse(objs)
         } catch (error) {
             return []
@@ -34,7 +34,7 @@ class ContenedorMsjs{
         objs.push(newObj)
 
         try {
-            await fs.writeFile(this.ruta = ruta, JSON.stringify(objs, null, 2))
+            await fs.writeFile(this.ruta, JSON.stringify(objs, null, 2))
             return newId
         } catch (error) {
             throw new Error(`Error al guardar: ${error}`)
@@ -52,7 +52,7 @@ class ContenedorMsjs{
         objs.splice(found, 1)
 
         try {
-            await fs.writeFile(this.ruta = ruta, JSON.stringify(objs, null, 2))
+            await fs.writeFile(this.ruta, JSON.stringify(objs, null, 2))
         } catch (error) {
             throw new Error(`Error al borrar: ${error}`)
         }
@@ -60,7 +60,7 @@ class ContenedorMsjs{
 
     async deleteAll(){
         try{
-            await fs.writeFile(this.ruta = ruta, JSON.stringify([], null, 2))
+            await fs.writeFile(this.ruta, JSON.stringify([], null, 2))
         } catch (error) {
             throw new Error(`Error al borrar todo: ${error}`)
         }
