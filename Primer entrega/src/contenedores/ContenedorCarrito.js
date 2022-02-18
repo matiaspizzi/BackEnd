@@ -3,7 +3,7 @@ const fs = require('fs')
 
 class ContenedorCarrito {
     constructor() {
-        this.ruta = './data/carritos.json'
+        this.ruta = 'src/data/carritos.json'
     }
 
     create() {

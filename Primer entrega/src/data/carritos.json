@@ -1,27 +1,17 @@
 [
   {
     "productos": [],
-    "timestamp": 1645143378893,
+    "timestamp": 1645146371625,
     "id": 1
   },
   {
-    "productos": [
-      {
-        "title": "Producto1",
-        "price": 400,
-        "thumbnail": "xxx",
-        "timestamp": 1645143351450,
-        "id": 1
-      },
-      {
-        "title": "Producto1",
-        "price": 400,
-        "thumbnail": "xxx",
-        "timestamp": 1645143354321,
-        "id": 2
-      }
-    ],
-    "timestamp": 1645143386150,
+    "productos": [],
+    "timestamp": 1645146372832,
     "id": 2
+  },
+  {
+    "productos": [],
+    "timestamp": 1645146373751,
+    "id": 3
   }
 ]

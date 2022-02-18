@@ -2,7 +2,7 @@ const fs = require('fs')
 
 class ContenedorProductos {
     constructor() {
-        this.ruta = './data/productos.json'
+        this.ruta = 'src/data/productos.json'
     }
 
     getById(id) {
