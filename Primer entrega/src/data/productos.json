@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Producto1",
+    "price": 400,
+    "thumbnail": "xxx",
+    "timestamp": 1645143351450,
+    "id": 1
+  },
+  {
+    "title": "Producto1",
+    "price": 400,
+    "thumbnail": "xxx",
+    "timestamp": 1645143354321,
+    "id": 2
+  },
+  {
+    "title": "Producto1",
+    "price": 400,
+    "thumbnail": "xxx",
+    "timestamp": 1645143356621,
+    "id": 3
+  },
+  {
+    "title": "Producto1",
+    "price": 400,
+    "thumbnail": "xxx",
+    "timestamp": 1645143357746,
+    "id": 4
+  }
+]

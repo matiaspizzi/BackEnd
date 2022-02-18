@@ -4,6 +4,8 @@ const router = express.Router()
 const ContenedorProductos = require('../contenedores/ContenedorProductos.js')
 const productosApi = new ContenedorProductos()
 
+const auth = require('../middlewares/auth.js')
+
 router.get('/:id?', (req, res) => {
     const id = req.params.id
     if(!id){
@@ -13,7 +15,7 @@ router.get('/:id?', (req, res) => {
     }
 });
 
-router.post('/', (req, res) => {
+router.post('/', auth.isAuthorized, (req, res) => {
     const prod = {
         title: req.body.title,
         price: req.body.price, 
@@ -23,19 +25,17 @@ router.post('/', (req, res) => {
     res.send(productosApi.getAll())
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', auth.isAuthorized, (req, res) => {
     const prod = {
         title: req.body.title,
         price: req.body.price,
         thumbnail: req.body.thumbnail
     }
-    productosApi.update(prod, req.params.id)
-    res.send(productosApi.getAll())
+    res.send(productosApi.update(prod, req.params.id))
 });
 
-router.delete('/:id', (req, res) => {
-    productosApi.deleteById(req.params.id)
-    res.send(productosApi.getAll())
+router.delete('/:id', auth.isAuthorized, (req, res) => {
+    res.send(productosApi.deleteById(req.params.id))
 });
 
 module.exports = router

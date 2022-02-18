@@ -77,7 +77,7 @@ class ContenedorCarrito {
         const carts = this.getAll()
         const index = carts.findIndex(cart => cart.id == id)
         if (index !== -1) {
-            const carts = this.carts.splice(index, 1)
+            carts.splice(index, 1)
             fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
             return carts
         } else {

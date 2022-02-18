@@ -38,7 +38,7 @@ class ContenedorProductos {
 
     update(elem, id) {
         const objs = this.getAll()
-        const newElem = { id: Number(id), ...elem }
+        const newElem = { id: Number(id), timestamp: Date.now(), ...elem }
         const index = objs.findIndex(p => p.id == id)
         if (index !== -1) {
             objs[index] = newElem
@@ -51,12 +51,14 @@ class ContenedorProductos {
 
     deleteById(id){
         const objs = this.getAll()
-        const found = objs.find(e => e.id == id)
+        const index = objs.findIndex(e => e.id == id)
         if (index == -1) {
-            throw new Error(`Error al borrar: no se encontró el id ${id}`)
+            return { error: `elemento no encontrado` }
+        } else {
+            objs.splice(index, 1)
+            fs.writeFileSync(this.ruta, JSON.stringify(objs, null, 2))
+            return this.getAll()
         }
-        objs.splice(found, 1)
-        fs.writeFileSync(this.ruta, JSON.stringify(objs, null, 2))
     }
 
     deleteAll(){
