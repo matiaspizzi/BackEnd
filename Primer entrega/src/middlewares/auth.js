@@ -1,4 +1,4 @@
-const admin = false
+const admin = true
 
 module.exports.isAuthorized = function (req, res, next) {
     if(admin) return next();

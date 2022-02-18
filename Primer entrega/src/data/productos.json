@@ -1,10 +1,10 @@
 [
   {
+    "id": 1,
+    "timestamp": 1645146874875,
     "title": "Producto1",
-    "price": 400,
-    "thumbnail": "xxx",
-    "timestamp": 1645146258466,
-    "id": 1
+    "price": 500,
+    "thumbnail": "xxx"
   },
   {
     "title": "Producto1",
@@ -26,5 +26,12 @@
     "thumbnail": "xxx",
     "timestamp": 1645146280982,
     "id": 4
+  },
+  {
+    "title": "Producto1",
+    "price": 400,
+    "thumbnail": "xxx",
+    "timestamp": 1645146806264,
+    "id": 5
   }
 ]

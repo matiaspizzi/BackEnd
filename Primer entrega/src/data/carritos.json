@@ -1,6 +1,14 @@
 [
   {
-    "productos": [],
+    "productos": [
+      {
+        "title": "Producto1",
+        "price": 400,
+        "thumbnail": "xxx",
+        "timestamp": 1645146258466,
+        "id": 1
+      }
+    ],
     "timestamp": 1645146371625,
     "id": 1
   },
