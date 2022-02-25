@@ -15,7 +15,7 @@ router.get('/:id?', (req, res) => {
     }
 });
 
-router.post('/', auth.isAuthorized, (req, res) => {
+router.post('/', auth.isAuthorized,  (req, res) => {
     const prod = {
         title: req.body.title,
         price: req.body.price, 
