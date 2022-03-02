@@ -16,8 +16,6 @@ class ContenedorMsjs{
         }).catch((err) => {
             console.log(err)
             throw err
-        }).finally(() => {
-            knex.destroy()
         })
     }
 

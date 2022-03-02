@@ -1,7 +1,7 @@
 const options = {
     client: 'mysql',
     connection: {
-        host: '192.168.0.153',
+        host: '127.0.0.1',
         user: 'matias',
         password: 'matias',
         database: 'desafio16'

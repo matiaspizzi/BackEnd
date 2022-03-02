@@ -43,7 +43,7 @@ class ContenedorProd {
           console.log('Producto agregado', newProduct)
           return newProduct
         } catch (error) {
-          console.log(error);  
+          console.log(error)
         }
       }
 
