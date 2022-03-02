@@ -17,11 +17,11 @@ const mensajesApi = new ContenedorMsjs('mensajes')
 io.on('connection', async socket => {
     console.log('Nuevo cliente conectado!');
 
-    socket.emit('productos', productosApi.getAll());
+    socket.emit('productos', await productosApi.getAll())
 
-    socket.on('update', producto => {
+    socket.on('update', async producto => {
         productosApi.save(producto)
-        io.sockets.emit('productos', productosApi.getAll());
+        io.sockets.emit('productos', await productosApi.getAll())
     })
 
     socket.emit('mensajes', await mensajesApi.getAll());
@@ -29,7 +29,7 @@ io.on('connection', async socket => {
     socket.on('nuevoMensaje', async mensaje => {
         mensaje.fyh = new Date().toLocaleString()
         await mensajesApi.save(mensaje)
-        io.sockets.emit('mensajes', await mensajesApi.getAll());
+        io.sockets.emit('mensajes', await mensajesApi.getAll())
     })
 });
 

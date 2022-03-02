@@ -1,7 +1,7 @@
 const options = {
     client: 'sqlite3',
     connection: {
-        filename: `${__dirname}/DB/productos.sql`
+        filename: `${__dirname}/DB/productos.sqlite`
     },
     useNullAsDefault: true
 }

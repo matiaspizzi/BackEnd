@@ -5,6 +5,7 @@ class ContenedorMsjs{
     constructor(tabla){
         this.tabla = tabla
 
+        knex.schema.dropTableIfExists(`${this.tabla}`)
         knex.schema.createTable(`${this.tabla}`, table => {
             table.increments('id').primary().notNullable()
             table.string('autor').notNullable()
@@ -20,62 +21,50 @@ class ContenedorMsjs{
         })
     }
 
-    getAll(){
-        knex.from(`${this.tabla}`).select("*")
-        .then((rows) => {
-            for (row of rows){ console.log(`${row['id']} ${row['name']} ${row['price']}`) }
-        }).catch((err) => {
+    async getAll(){
+        try{
+            return await knex.from(`${this.tabla}`).select("*")
+        } catch(err) {
             console.log(err)
             throw err
-        }).finally(() =>{
-            knex.destroy()
-        }) 
+        } 
     }
     
-    getById(id){
-        knex.from(`${this.tabla}`).where({ id: id }).select()
-        .then((rows) => {
-            for (row of rows){ console.log(`${row['id']} ${row['name']} ${row['price']}`) }
-        }).catch((err) => {
+    async getById(id){
+        try{
+            return await knex.from(`${this.tabla}`).where({ id: id }).select()
+        } catch(err) {
             console.log(err)
             throw err
-        }).finally(() =>{
-            knex.destroy()
-        }) 
+        }
     }
     
-    save(obj){
-        knex(`${this.tabla}`).insert(obj)
-        .then(() => { console.log('data inserted') })
-        .catch((err) => { console.log(err); throw err })
-        .finally(() => {
-            knex.destroy()
-        })
+    async save(obj){
+        try{
+            return await knex(`${this.tabla}`).insert(obj)
+        } catch(err) {
+            console.log(err)
+            throw err
+        }
     }
     
 
-    deleteById(id){
-        knex.from(`${this.tabla}`).where({ id: id }).del()
-        .then((rows) => {
-            for (row of rows){ console.log(`${row['id']} ${row['name']} ${row['price']}`) }
-        }).catch((err) => {
+    async deleteById(id){
+        try{
+            return await knex.from(`${this.tabla}`).where({ id: id }).del()
+        } catch(err) {
             console.log(err)
             throw err
-        }).finally(() =>{
-            knex.destroy()
-        }) 
+        }
     }
 
-    deleteAll(){
-        knex.from(`${this.tabla}`).del()
-        .then(() => {
-            console.log("data deleted")
-        }).catch((err) => {
+    async deleteAll(){
+        try{
+            return await knex.from(`${this.tabla}`).del()
+        } catch(err) {
             console.log(err)
             throw err
-        }).finally(() =>{
-            knex.destroy()
-        }) 
+        }
     }
 }
 

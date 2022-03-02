@@ -3,7 +3,7 @@ const knex = require('knex')(options)
 
 knex.from('cars').select('*')
 .then((rows) => {
-    for (row of rows){ console.log(`${row['id']} ${row['name']} ${row['price']}`) }
+    console.log(rows)
 }).catch((err) => {
     console.log(err)
     throw err

@@ -5,6 +5,7 @@ class ContenedorProd {
     constructor(tabla) {
         this.tabla = tabla
 
+        knex.schema.dropTableIfExists(`${this.tabla}`)
         knex.schema.createTable(`${this.tabla}`, table => {
             table.increments('id').primary().notNullable()
             table.string('title').notNullable()
@@ -15,70 +16,59 @@ class ContenedorProd {
         }).catch((err) => {
             console.log(err)
             throw err
-        }).finally(() => {
-            knex.destroy()
         })
     }
 
-    getById(id) {
-        knex.from(`${this.tabla}`).where({ id: id }).select()
-        .then((elem) => {
-            console.log(`${elem}`)
-        }).catch((err) => {
+    async getById(id) {
+        try{
+            return await knex.from(`${this.tabla}`).where({ id: id }).select()
+        } catch(err) {
             console.log(err)
             throw err
-        }).finally(() =>{
-            knex.destroy()
-        }) 
+        }
     }
 
-    getAll() {
-        knex.from(`${this.tabla}`).select("*")
-        .then((rows) => {
-            for (row of rows){ console.log(`${row['id']} ${row['name']} ${row['price']}`) }
-        }).catch((err) => {
+    async getAll() {
+        try{
+            return await knex.from(`${this.tabla}`).select("*")
+        } catch(err) {
             console.log(err)
-            throw err
-        }).finally(() =>{
-            knex.destroy()
-        }) 
+        }
     }
 
-    save(elem) {
-        knex(`${this.tabla}`).insert(obj)
-        .then(() => { console.log('data inserted') })
-        .catch((err) => { console.log(err); throw err })
-        .finally(() => {
-            knex.destroy()
-        })
+    async save(elem) {
+        try {
+          const [newProductId] = await knex.insert(elem).from(`${this.tabla}`)
+          const [newProduct] = await knex.select('*').from(`${this.tabla}`).where('id', newProductId)
+          console.log('Producto agregado', newProduct)
+          return newProduct
+        } catch (error) {
+          console.log(error);  
+        }
+      }
+
+    async update(elem, id) {
+        try{
+            return await knex.table(`${this.tabla}`).where({ id: id }).update({ elem })
+        } catch (error) {
+            console.log(error);  
+        }
     }
 
-    update(elem, id) {
-        knex.table(`${this.tabla}`).where({ id: id }).update({ elem })
+    async deleteById(id) {
+        try{
+            return await knex.from(`${this.tabla}`).where({ id: id }).del()
+        } catch (error) {
+            console.log(error);  
+        }
     }
 
-    deleteById(id) {
-        knex.from(`${this.tabla}`).where({ id: id }).del()
-        .then((rows) => {
-            for (row of rows){ console.log(`${row['id']} ${row['name']} ${row['price']}`) }
-        }).catch((err) => {
-            console.log(err)
-            throw err
-        }).finally(() =>{
-            knex.destroy()
-        }) 
-    }
-
-    deleteAll() {
-        knex.from(`${this.tabla}`).del()
-        .then(() => {
-            console.log("data deleted")
-        }).catch((err) => {
-            console.log(err)
-            throw err
-        }).finally(() =>{
-            knex.destroy()
-        })
+    async deleteAll() {
+        try{
+            return await knex.from(`${this.tabla}`).del()
+        }catch (error) {
+            console.log(error);  
+        }
     }
 }
 
