@@ -38,12 +38,13 @@ class ContenedorProductos {
 
     update(elem, id) {
         const objs = this.getAll()
-        const newElem = { id: Number(id), timestamp: Date.now(), ...elem }
         const index = objs.findIndex(p => p.id == id)
         if (index !== -1) {
-            objs[index] = newElem
+            if(elem.title) {objs[index].title = elem.title}
+            if(elem.price) {objs[index].price = elem.price}
+            if(elem.thumbnail) {objs[index].thumbnail = elem.thumbnail}
             fs.writeFileSync(this.ruta, JSON.stringify(objs, null, 2))
-            return newElem
+            return objs[index]
         } else {
             return { error: `elemento no encontrado` }
         }

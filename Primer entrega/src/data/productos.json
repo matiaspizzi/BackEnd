@@ -3,28 +3,14 @@
     "title": "Producto1",
     "price": 500,
     "thumbnail": "xxx",
-    "timestamp": 1645287040252,
-    "id": 1
-  },
-  {
-    "title": "Producto1",
-    "price": 500,
-    "thumbnail": "xxx",
     "timestamp": 1645287048135,
     "id": 2
   },
   {
-    "title": "Producto1",
-    "price": 500,
-    "thumbnail": "xxx",
+    "title": "prueba",
+    "price": 20,
+    "thumbnail": "prueba",
     "timestamp": 1645287048926,
     "id": 3
-  },
-  {
-    "title": "Producto1",
-    "price": 500,
-    "thumbnail": "xxx",
-    "timestamp": 1645287050256,
-    "id": 5
   }
 ]
