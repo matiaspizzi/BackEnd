@@ -10,7 +10,7 @@ class ContenedorMongo {
 
   async save(elem) {
     try {
-      let elementos = await this.coleccion.find();
+      let elementos = this.getAll()
       let newId;
       if (elementos.length == 0) {
         newId = 1;
@@ -39,8 +39,7 @@ class ContenedorMongo {
   async getById(id) {
     try {
       let elem = await this.coleccion.find({ id: id });
-      if (!elem) elem = null;
-      return elem;
+      if (elem) return elem;
     } catch (error) {
       return error;
     }
@@ -55,23 +54,7 @@ class ContenedorMongo {
     }
   }
 
-  deleteProdById(prodId, cartId) {
-    const cart = this.getById(cartId)
-    if (cart) {
-        const prodIndex = cart.productos.findIndex(p => p.id == prodId)
-        if (prodIndex) {
-            cart.productos.splice(prodIndex, 1)
-            fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
-            return cart.productos
-        } else {
-            return { error: `elemento no encontrado` }
-        }
-    } else {
-        return { error: `carrito no encontrado` }
-    }
-  }
-
-  async update(id, elem) {
+  async update(elem, id) {
     try {
       return await this.coleccion.findOneAndUpdate({ id: id }, elem, {new: true});
     } catch (error) {

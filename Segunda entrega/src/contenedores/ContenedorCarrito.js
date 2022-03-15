@@ -34,7 +34,7 @@ class ContenedorCarrito {
         }
     }
 
-    save(elem, id) {
+    saveProd(elem, id) {
         const carts = this.getAll()
         const index = carts.findIndex(c => c.id == id)
         if (index !== -1) {
@@ -46,7 +46,13 @@ class ContenedorCarrito {
         }
     }
 
-    deleteProdById(prodId, cartId) {
+    getById(id) {
+        const carts = this.getAll()
+        const found = carts.find(cart => cart.id == id)
+        return found || { error: `carrito no encontrado` }
+    }
+
+    deleteProd(prodId, cartId) {
         const carts = this.getAll()
         const cartIndex = carts.findIndex(c => c.id == cartId)
 
@@ -54,7 +60,7 @@ class ContenedorCarrito {
 
             const prodIndex = carts[cartIndex].productos.findIndex(p => p.id == prodId)
 
-            if (prodIndex !== -1) {
+            if (prodIndex !== -1){
 
                 carts[cartIndex].productos.splice(prodIndex, 1)
                 fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
@@ -65,12 +71,6 @@ class ContenedorCarrito {
         } else {
             return { error: `carrito no encontrado` }
         }
-    }
-
-    getById(id) {
-        const carts = this.getAll()
-        const found = carts.find(cart => cart.id == id)
-        return found || { error: `carrito no encontrado` }
     }
 
     deleteById(id) {

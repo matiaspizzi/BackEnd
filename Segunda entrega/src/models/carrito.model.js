@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const carritoSchema = new Schema({
     productos: {type: Array, required: true},
@@ -6,6 +6,4 @@ const carritoSchema = new Schema({
     id: {type: Number, required: true, unique: true}
 })
 
-const carritoModel = model('carritos', carritoSchema)
-
-module.exports = carritoModel
+module.exports = carritoSchema

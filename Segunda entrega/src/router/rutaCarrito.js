@@ -1,23 +1,20 @@
 const express = require("express")
 const router = express.Router()
 
-const ContenedorCarrito = require('../contenedores/ContenedorCarrito.js')
-const carritoApi = new ContenedorCarrito()
-
-const ContenedorProductos = require('../contenedores/ContenedorProductos.js')
-const productosApi = new ContenedorProductos()
+const carritosApi = require('../daos/carritos/carritosDaoMongo.js')
+const productosApi = require('../daos/productos/productosDaoMongo.js')
 
 router.post('/', (req, res) => {
-    res.send(carritoApi.create())
+    res.send(carritosApi.create())
 });
 
 router.delete('/:id', (req, res) => {
-    carritoApi.deleteById(req.params.id)
-    res.send(carritoApi.getAll())
+    carritosApi.deleteById(req.params.id)
+    res.send(carritosApi.getAll())
 });
 
 router.get('/:id/productos', (req, res) => {
-    cart = carritoApi.getById(req.params.id)
+    cart = carritosApi.getById(req.params.id)
     if(cart.productos){
         res.send(cart.productos)
     } else {
@@ -29,7 +26,7 @@ router.post('/:id/productos/:id_prod', (req, res) => {
     const cartId = req.params.id
     const prod = productosApi.getById(req.params.id_prod)
     if(prod.id){
-        const prods = carritoApi.save(prod, cartId)
+        const prods = carritosApi.saveProd(prod, cartId)
         res.send(prods)
     } else {
         res.send(prod)
@@ -39,7 +36,7 @@ router.post('/:id/productos/:id_prod', (req, res) => {
 router.delete('/:id/productos/:id_prod', (req, res) => {
     const cartId = req.params.id
     const prodId = req.params.id_prod
-    const prods = carritoApi.delete(prodId, cartId)
+    const prods = carritosApi.deleteProd(prodId, cartId)
     res.send(prods)
 });
 
