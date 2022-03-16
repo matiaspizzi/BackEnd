@@ -10,19 +10,17 @@ class ContenedorMongo {
 
   async create() {
     try {
-      const carritos = await this.getAll();
-      let newId = 0
-      if (carritos.length == 0) {
+      const carts = await this.getAll();
+      let newId = 0;
+      if (carts.length == 0) {
         newId = 1;
       } else {
-        newId = carritos[carritos.length - 1].id + 1;
+        newId = carts[carts.length - 1].id + 1;
       }
-      const newElem = { productos: [], timestamp: Date.now(), id: newId };
-      const elem = new this.coleccion(newElem);
-      await elem.save();
+      const newElem = { productos: [], id: newId };
+      await new this.coleccion(newElem).save();
       return this.getAll();
     } catch (error) {
-      console.log(error);
       return error;
     }
   }
@@ -38,36 +36,22 @@ class ContenedorMongo {
 
   async saveProd(prod, cartId) {
     try {
-      const cart = await this.getById(cartId);
-      console.log(cart)
-      if (cart) {
-        const newCart = cart.productos.push(prod);
-        return await this.coleccion.findOneAndUpdate({ id: cartId }, newCart, {
-          new: true,
-        });
-      }
+      return await this.coleccion.findOneAndUpdate(
+        { id: cartId },
+        { $push: { productos: prod } }
+      );
     } catch (error) {
       return error;
     }
   }
 
-  async deleteProd(prodId, cartId) {
+  async deleteProd(prod, cartId) {
     try {
-      const cart = await this.getById(cartId);
-      if (cart) {
-        const index = cart.productos.findIndex((prod) => prod.id == prodId);
-        if (index = !-1) {
-          const newCart = cart.productos.splice(index, 1);
-          return await this.coleccion.findOneAndUpdate(
-            { id: cartId },
-            newCart,
-            { new: true }
-          );
-        }
-      } else {
-        return { error: `carrito no encontrado` };
-      }
+      return await this.coleccion.findOneAndUpdate(
+        { id: cartId },
+        { $pull: { productos: prod } })
     } catch (error) {
+      console.log(error)
       return error;
     }
   }

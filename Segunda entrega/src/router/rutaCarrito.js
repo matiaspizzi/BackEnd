@@ -4,17 +4,17 @@ const router = express.Router()
 const carritosApi = require('../daos/carritos/carritosDaoMongo.js')
 const productosApi = require('../daos/productos/productosDaoMongo.js')
 
-router.post('/', (req, res) => {
-    res.send(carritosApi.create())
+router.post('/', async (req, res) => {
+    res.send(await carritosApi.create())
 });
 
-router.delete('/:id', (req, res) => {
-    carritosApi.deleteById(req.params.id)
-    res.send(carritosApi.getAll())
+router.delete('/:id', async (req, res) => {
+    await carritosApi.deleteById(req.params.id)
+    res.send(await carritosApi.getAll())
 });
 
-router.get('/:id/productos', (req, res) => {
-    cart = carritosApi.getById(req.params.id)
+router.get('/:id/productos', async (req, res) => {
+    cart = await carritosApi.getById(req.params.id)
     if(cart.productos){
         res.send(cart.productos)
     } else {
@@ -22,22 +22,23 @@ router.get('/:id/productos', (req, res) => {
     }
 });
 
-router.post('/:id/productos/:id_prod', (req, res) => {
+router.post('/:id/productos/:id_prod', async (req, res) => {
     const cartId = req.params.id
-    const prod = productosApi.getById(req.params.id_prod)
-    if(prod.id){
-        const prods = carritosApi.saveProd(prod, cartId)
-        res.send(prods)
+    const prod = await productosApi.getById(req.params.id_prod)
+    if(prod){
+        await carritosApi.saveProd(prod, cartId)
+        res.send(await carritosApi.getById(cartId))
     } else {
         res.send(prod)
     } 
 })
 
-router.delete('/:id/productos/:id_prod', (req, res) => {
+router.delete('/:id/productos/:id_prod', async (req, res) => {
     const cartId = req.params.id
     const prodId = req.params.id_prod
-    const prods = carritosApi.deleteProd(prodId, cartId)
-    res.send(prods)
+    const prod = await productosApi.getById(prodId)
+   console.log( await carritosApi.deleteProd(prod, cartId))
+    res.send(await carritosApi.getById(cartId))
 });
 
 module.exports = router

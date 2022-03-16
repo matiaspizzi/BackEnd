@@ -10,14 +10,14 @@ class ContenedorMongo {
 
   async save(elem) {
     try {
-      let elementos = this.getAll()
+      let elementos = await this.getAll()
       let newId;
       if (elementos.length == 0) {
         newId = 1;
       } else {
         newId = elementos[elementos.length - 1].id + 1;
       }
-      const newElem = { ...elem, timestamp: Date.now(), id: newId };
+      const newElem = { ...elem, id: newId };
       const prodm = new this.coleccion(newElem);
       await prodm.save();
       return this.getAll()
@@ -56,7 +56,7 @@ class ContenedorMongo {
 
   async update(elem, id) {
     try {
-      return await this.coleccion.findOneAndUpdate({ id: id }, elem, {new: true});
+      return await this.coleccion.findOneAndUpdate({ id: id }, elem, { new: true });
     } catch (error) {
       console.log(error);
       return error;
