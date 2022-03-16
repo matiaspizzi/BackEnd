@@ -52,13 +52,13 @@ class ContenedorCarrito {
         return found || { error: `carrito no encontrado` }
     }
 
-    deleteProd(prodId, cartId) {
+    deleteProd(prod, cartId) {
         const carts = this.getAll()
         const cartIndex = carts.findIndex(c => c.id == cartId)
 
         if (cartIndex !== -1) {
 
-            const prodIndex = carts[cartIndex].productos.findIndex(p => p.id == prodId)
+            const prodIndex = carts[cartIndex].productos.findIndex(p => p.id == prod.id)
 
             if (prodIndex !== -1){
 
