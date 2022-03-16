@@ -4,8 +4,8 @@ const config = require("../config.js");
 mongoose.connect(config.mongo.url, config.mongo.options);
 
 class ContenedorMongo {
-  constructor(coll, schema) {
-    this.coleccion = mongoose.model(coll, schema);
+  constructor(collection, schema) {
+    this.collection = mongoose.model(collection, schema);
   }
 
   async create() {
@@ -18,7 +18,7 @@ class ContenedorMongo {
         newId = carts[carts.length - 1].id + 1;
       }
       const newElem = { productos: [], id: newId };
-      await new this.coleccion(newElem).save();
+      await new this.collection(newElem).save();
       return this.getAll();
     } catch (error) {
       return error;
@@ -27,7 +27,7 @@ class ContenedorMongo {
 
   async getAll() {
     try {
-      let contenido = await this.coleccion.find();
+      let contenido = await this.collection.find();
       return contenido;
     } catch (error) {
       return error;
@@ -36,7 +36,7 @@ class ContenedorMongo {
 
   async saveProd(prod, cartId) {
     try {
-      return await this.coleccion.findOneAndUpdate(
+      return await this.collection.findOneAndUpdate(
         { id: cartId },
         { $push: { productos: prod } }
       );
@@ -47,9 +47,34 @@ class ContenedorMongo {
 
   async deleteProd(prod, cartId) {
     try {
-      return await this.coleccion.findOneAndUpdate(
+      return await this.collection.updateOne(
         { id: cartId },
-        { $pull: { productos: prod } })
+        [
+          {
+            $set: {
+              productos: {
+                $let: {
+                  vars: { ix: { $indexOfArray: ["$productos", prod] } },
+                  in: {
+                    $cond: [{ $eq: ["$$ix", 0] }, {
+                      $concatArrays: [
+                        { $slice: ["$productos", "$$ix"] },
+                        { $slice: ["$productos", { $add: [1, "$$ix"] }, { $size: "$productos" }] }
+                      ]
+                    },
+                    {
+                      $concatArrays: [
+                        { $slice: ["$productos", 0, "$$ix"] },
+                        { $slice: ["$productos", { $add: [1, "$$ix"] }, { $size: "$productos" }] }
+                      ]
+                    }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ])
     } catch (error) {
       console.log(error)
       return error;
@@ -58,7 +83,7 @@ class ContenedorMongo {
 
   async getById(id) {
     try {
-      let elem = await this.coleccion.find({ id: id });
+      let elem = await this.collection.find({ id: id });
       if (elem) return elem;
     } catch (error) {
       return error;
@@ -67,7 +92,7 @@ class ContenedorMongo {
 
   async deleteById(id) {
     try {
-      await this.coleccion.deleteOne({ id: id });
+      await this.collection.deleteOne({ id: id });
       return this.getAll();
     } catch (error) {
       return error;
