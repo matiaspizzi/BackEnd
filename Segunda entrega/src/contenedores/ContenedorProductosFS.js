@@ -1,8 +1,7 @@
 const fs = require("fs");
-const config = require("../config");
 
-class ContenedorProductos {
-    constructor() {
+class ContenedorProductosFS {
+    constructor(config) {
         this.ruta = config.fileSystem.productosPath;
     }
 
@@ -73,4 +72,4 @@ class ContenedorProductos {
     }
 }
 
-module.exports = ContenedorProductos;
+module.exports = ContenedorProductosFS;

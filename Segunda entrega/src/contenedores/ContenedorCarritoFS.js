@@ -1,8 +1,7 @@
 const fs = require('fs')
-const config = require('../config')
 
-class ContenedorCarrito {
-    constructor() {
+class ContenedorCarritoFS {
+    constructor(config) {
         this.ruta = config.fileSystem.carritosPath
     }
 
@@ -86,4 +85,4 @@ class ContenedorCarrito {
     }
 }
 
-module.exports = ContenedorCarrito
+module.exports = ContenedorCarritoFS

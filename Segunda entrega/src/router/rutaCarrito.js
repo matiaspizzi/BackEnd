@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
 
-const carritosApi = require('../daos/carritos/carritosDaoMongo.js')
-const productosApi = require('../daos/productos/productosDaoMongo.js')
+const carritosApi = require('../daos/carritos/carritosDaoFS.js')
+const productosApi = require('../daos/productos/productosDaoFS.js')
 
 router.post('/', async (req, res) => {
     res.send(await carritosApi.create())

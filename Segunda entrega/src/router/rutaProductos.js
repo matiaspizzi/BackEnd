@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 
-const productosApi = require('../daos/productos/productosDaoMongo.js')
+const productosApi = require('../daos/productos/productosDaoFS.js')
 const auth = require('../middlewares/auth.js')
 
 router.get('/:id?', async (req, res) => {
