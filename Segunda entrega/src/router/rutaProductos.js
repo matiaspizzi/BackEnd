@@ -1,7 +1,22 @@
 const express = require("express")
+const { config } = require("nodemon")
 const router = express.Router()
 
-const productosApi = require('../daos/productos/productosDaoFS.js')
+const configDB = require('../config')
+
+let productosApi
+
+switch (configDB.DB) {
+    case 'mongo':
+        productosApi = require('../daos/productos/productosDaoMongo.js')
+        break;
+    case 'firebase':
+        productosApi = require('../daos/productos/productosDaoFirebase.js')
+        break;
+    case 'fs': 
+        productosApi = require('../daos/productos/productosDaoFS.js')
+}
+
 const auth = require('../middlewares/auth.js')
 
 router.get('/:id?', async (req, res) => {

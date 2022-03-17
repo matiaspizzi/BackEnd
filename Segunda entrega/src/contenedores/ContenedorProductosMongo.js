@@ -39,7 +39,7 @@ class ContenedorMongo {
   async getById(id) {
     try {
       let elem = await this.collection.find({ id: id });
-      if (elem) return elem;
+      if(elem[0] != undefined) return elem
     } catch (error) {
       return error;
     }
@@ -56,7 +56,8 @@ class ContenedorMongo {
 
   async update(elem, id) {
     try {
-      return await this.collection.updateOne({ id: id }, elem);
+      await this.collection.updateOne({ id: id }, elem)
+      return await this.getById(id);
     } catch (error) {
       console.log(error);
       return error;

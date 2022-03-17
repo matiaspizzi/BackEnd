@@ -18,7 +18,7 @@ class ContenedorMongo {
         newId = carts[carts.length - 1].id + 1;
       }
       const newElem = { productos: [], id: newId };
-      await new this.collection(newElem).save();
+      await this.collection(newElem).save();
       return this.getAll();
     } catch (error) {
       return error;
@@ -36,10 +36,13 @@ class ContenedorMongo {
 
   async saveProd(prod, cartId) {
     try {
-      return await this.collection.findOneAndUpdate(
-        { id: cartId },
-        { $push: { productos: prod } }
-      );
+      console.log(prod)
+      if(prod != []){
+        return await this.collection.findOneAndUpdate(
+          { id: cartId },
+          { $push: { productos: prod } }
+        );
+      }
     } catch (error) {
       return error;
     }

@@ -1,4 +1,4 @@
-const ContenedorCarritosFS = require('../../contenedores/ContenedorCarritoFS.js')
+const ContenedorCarritosFS = require('../../contenedores/ContenedorCarritosFS.js')
 const config = require('../../config.js')
 
 const carritosApi = new ContenedorCarritosFS(config)

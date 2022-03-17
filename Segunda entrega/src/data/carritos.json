@@ -1,12 +1,15 @@
 [
   {
-    "productos": [],
-    "timestamp": 1645287092059,
-    "id": 2
-  },
-  {
-    "productos": [],
-    "timestamp": 1645287094274,
-    "id": 3
+    "productos": [
+      {
+        "title": "prueba",
+        "price": 20,
+        "thumbnail": "prueba",
+        "id": 4,
+        "timestamp": 1647557770842
+      }
+    ],
+    "timestamp": 1647557848748,
+    "id": 1
   }
 ]

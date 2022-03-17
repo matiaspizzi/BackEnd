@@ -34,15 +34,17 @@ class ContenedorCarritoFS {
     }
 
     saveProd(elem, id) {
-        const carts = this.getAll()
-        const index = carts.findIndex(c => c.id == id)
-        if (index !== -1) {
-            carts[index].productos.push(elem)
-            fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
-            return carts[index].productos
-        } else {
-            return { error: `carrito no encontrado` }
-        }
+        if (elem.id){
+            const carts = this.getAll()
+            const index = carts.findIndex(c => c.id == id)
+            if (index !== -1) {
+                carts[index].productos.push(elem)
+                fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
+                return carts[index].productos
+            } else {
+                console.log({ error: `carrito no encontrado` })
+            }
+        } 
     }
 
     getById(id) {
@@ -56,11 +58,8 @@ class ContenedorCarritoFS {
         const cartIndex = carts.findIndex(c => c.id == cartId)
 
         if (cartIndex !== -1) {
-
             const prodIndex = carts[cartIndex].productos.findIndex(p => p.id == prod.id)
-
             if (prodIndex !== -1){
-
                 carts[cartIndex].productos.splice(prodIndex, 1)
                 fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
                 return carts[cartIndex].productos

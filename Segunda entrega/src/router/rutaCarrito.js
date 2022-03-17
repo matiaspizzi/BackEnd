@@ -1,8 +1,24 @@
 const express = require("express")
 const router = express.Router()
 
-const carritosApi = require('../daos/carritos/carritosDaoFS.js')
-const productosApi = require('../daos/productos/productosDaoFS.js')
+const configDB = require('../config')
+
+let productosApi
+let carritosApi
+
+switch (configDB.DB) {
+    case 'mongo':
+        productosApi = require('../daos/productos/productosDaoMongo.js')
+        carritosApi = require('../daos/carritos/carritosDaoMongo.js')
+        break;
+    case 'firebase':
+        productosApi = require('../daos/productos/productosDaoFirebase.js')
+        carritosApi = require('../daos/carritos/carritosDaoFirebase.js')
+        break;
+    case 'fs': 
+        productosApi = require('../daos/productos/productosDaoFS.js')
+        carritosApi = require('../daos/carritos/carritosDaoFS.js')
+}
 
 router.post('/', async (req, res) => {
     res.send(await carritosApi.create())
@@ -29,7 +45,7 @@ router.post('/:id/productos/:id_prod', async (req, res) => {
         await carritosApi.saveProd(prod, cartId)
         res.send(await carritosApi.getById(cartId))
     } else {
-        res.send(prod)
+        res.send({error:`producto id:${req.params.id_prod} no encontrado`})
     } 
 })
 
