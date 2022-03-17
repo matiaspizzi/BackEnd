@@ -1,6 +1,4 @@
 var firebase = require("firebase-admin");
-
-
 class ContenedorFirebase {
     constructor(collection) {
         this.collection = firebase.firestore().collection(collection)
