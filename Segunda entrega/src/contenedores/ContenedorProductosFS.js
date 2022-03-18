@@ -1,23 +1,8 @@
 const fs = require("fs");
 
 class ContenedorProductosFS {
-    constructor(config) {
-        this.ruta = config.fileSystem.productosPath;
-    }
-
-    getById(id) {
-        const objs = this.getAll();
-        const found = objs.find((o) => o.id == id);
-        return found || { error: `elemento no encontrado` };
-    }
-
-    getAll() {
-        try {
-            const objs = fs.readFileSync(this.ruta, "utf-8");
-            return JSON.parse(objs);
-        } catch (err) {
-            return [];
-        }
+    constructor(path) {
+        this.ruta = path;
     }
 
     save(obj) {
@@ -32,7 +17,22 @@ class ContenedorProductosFS {
         objs.push(newObj);
 
         fs.writeFileSync(this.ruta, JSON.stringify(objs, null, 2));
-        return newObj;
+        return this.getAll();
+    }
+
+    getAll() {
+        try {
+            const objs = fs.readFileSync(this.ruta, "utf-8");
+            return JSON.parse(objs);
+        } catch (err) {
+            return [];
+        }
+    }
+
+    getById(id) {
+        const objs = this.getAll();
+        const found = objs.find((o) => o.id == id);
+        return found || { error: `Producto ${id} no encontrado` };
     }
 
     update(elem, id) {
@@ -49,9 +49,9 @@ class ContenedorProductosFS {
                 objs[index].thumbnail = elem.thumbnail;
             }
             fs.writeFileSync(this.ruta, JSON.stringify(objs, null, 2));
-            return objs[index];
+            return this.getById(id);
         } else {
-            return { error: `elemento no encontrado` };
+            return { error: `Producto ${id} no encontrado` };
         }
     }
 
@@ -59,7 +59,7 @@ class ContenedorProductosFS {
         const objs = this.getAll();
         const index = objs.findIndex((e) => e.id == id);
         if (index == -1) {
-            return { error: `elemento no encontrado` };
+            return { error: `Producto ${id} no encontrado` };
         } else {
             objs.splice(index, 1);
             fs.writeFileSync(this.ruta, JSON.stringify(objs, null, 2));
@@ -69,6 +69,7 @@ class ContenedorProductosFS {
 
     deleteAll() {
         fs.writeFileSync(this.ruta, JSON.stringify([], null, 2));
+        return this.getAll()
     }
 }
 

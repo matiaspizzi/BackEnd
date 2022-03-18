@@ -11,8 +11,8 @@ app.use("/api/productos", require('./router/rutaProductos'));
 app.use("/api/carrito", require('./router/rutaCarrito'));
 //********
 
-app.use(function(req, res, next){
-    res.status(404).send({ error : -2, descripcion: `ruta ${req.path} método ${req.method} no implementada`});
+app.use(function (req, res, next) {
+    res.status(404).send({ error: -2, descripcion: `ruta ${req.path} método ${req.method} no implementada` });
     return;
 });
 

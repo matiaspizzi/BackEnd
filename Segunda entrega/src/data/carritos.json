@@ -1,15 +1,1 @@
-[
-  {
-    "productos": [
-      {
-        "title": "prueba",
-        "price": 20,
-        "thumbnail": "prueba",
-        "id": 4,
-        "timestamp": 1647557770842
-      }
-    ],
-    "timestamp": 1647557848748,
-    "id": 1
-  }
-]
+[]

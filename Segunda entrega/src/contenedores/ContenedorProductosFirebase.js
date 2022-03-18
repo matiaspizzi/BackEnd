@@ -1,9 +1,4 @@
 var firebase = require("firebase-admin");
-var config = require("../config");
-
-firebase.initializeApp({
-    credential: firebase.credential.cert(config.firebase)
-});
 
 class ContenedorFirebase {
     constructor(collection) {
@@ -23,7 +18,6 @@ class ContenedorFirebase {
             await this.collection.doc(`${newId}`).set(newElem);
             return await this.getAll()
         } catch (error) {
-            console.log(error);
             return error;
         }
     }
@@ -37,7 +31,6 @@ class ContenedorFirebase {
             });
             return result;
         } catch (error) {
-            console.log(error);
             return error;
         }
     }
@@ -46,19 +39,9 @@ class ContenedorFirebase {
         try {
             const doc = await this.collection.doc(id).get();
             const data = doc.data();
-            return data
+            if (data) return data
+            else return { error: `producto ${id} no encontrado` }
         } catch (error) {
-            console.log(error);
-            return error;
-        }
-    }
-
-    async deleteById(id) {
-        try {
-            await this.collection.doc(id).delete();
-            return await this.getAll();
-        } catch (error) {
-            console.log(error);
             return error;
         }
     }
@@ -69,7 +52,18 @@ class ContenedorFirebase {
             await this.collection.doc(id).update(newElem)
             return await this.getById(id);
         } catch (error) {
-            console.log(error);
+            return error;
+        }
+    }
+
+    async deleteById(id) {
+        try {
+            const data = await this.getById(id)
+            if (data.id) {
+                await this.collection.doc(id).delete()
+                return await this.getAll();
+            } else return data
+        } catch (error) {
             return error;
         }
     }
@@ -88,4 +82,3 @@ class ContenedorFirebase {
 }
 
 module.exports = ContenedorFirebase;
-  

@@ -1,8 +1,4 @@
 const mongoose = require("mongoose");
-const config = require("../config.js");
-
-mongoose.connect(config.mongo.url, config.mongo.options);
-
 class ContenedorMongo {
   constructor(collection, schema) {
     this.collection = mongoose.model(collection, schema);
@@ -18,11 +14,10 @@ class ContenedorMongo {
         newId = elementos[elementos.length - 1].id + 1;
       }
       const newElem = { ...elem, id: newId };
-      const prodm = new this.collection(newElem);
+      const prodm = await this.collection(newElem);
       await prodm.save();
-      return this.getAll()
+      return await this.getAll()
     } catch (error) {
-      console.log(error);
       return error;
     }
   }
@@ -39,16 +34,9 @@ class ContenedorMongo {
   async getById(id) {
     try {
       let elem = await this.collection.find({ id: id });
-      if(elem[0] != undefined) return elem
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async deleteById(id) {
-    try {
-      await this.collection.deleteOne({ id: id });
-      return this.getAll()
+      if (elem[0]) {
+        return elem[0]
+      } else { return { error: `Producto ${id} no encontrado` } }
     } catch (error) {
       return error;
     }
@@ -64,10 +52,19 @@ class ContenedorMongo {
     }
   }
 
+  async deleteById(id) {
+    try {
+      await this.collection.deleteOne({ id: id });
+      return await this.getAll()
+    } catch (error) {
+      return error;
+    }
+  }
+
   async deleteAll() {
     try {
       await this.collection.deleteMany();
-      return this.getAll()
+      return await this.getAll()
     } catch (error) {
       return error;
     }

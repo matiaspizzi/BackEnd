@@ -39,7 +39,7 @@ class ContenedorFirebase {
         try {
             const cart = await this.getById(cartId)
             cart.productos.push(prod)
-            const newCart = {...cart, timestamp: Date.now() }
+            const newCart = { ...cart, timestamp: Date.now() }
             await this.collection.doc(cartId).update(newCart)
             return await this.getById(cartId)
         } catch (error) {
@@ -50,17 +50,18 @@ class ContenedorFirebase {
     async deleteProd(prod, cartId) {
         try {
             const cart = await this.getById(cartId)
-            const prodIndex = cart.productos.findIndex(p => p.id === prod.id)
-            if(prodIndex !== -1){
-                cart.productos.splice(prodIndex, 1)
-                const newCart = {...cart, timestamp: Date.now() }
-                await this.collection.doc(cartId).update(newCart)
-                return await this.getById(cartId)
-            } else {
-                return {error: `Producto id:${prod.id} no encontrado`}
-            }
+            if (cart.id) {
+                const prodIndex = cart.productos.findIndex(p => p.id === prod.id)
+                if (prodIndex !== -1) {
+                    cart.productos.splice(prodIndex, 1)
+                    const newCart = { ...cart, timestamp: Date.now() }
+                    await this.collection.doc(cartId).update(newCart)
+                    return await this.getById(cartId)
+                } else {
+                    return { error: `Producto ${prod.id} no encontrado` }
+                }
+            } else return cart
         } catch (error) {
-            console.log(error)
             return error;
         }
     }
@@ -69,19 +70,21 @@ class ContenedorFirebase {
         try {
             const doc = await this.collection.doc(id).get();
             const data = doc.data();
-            return data
+            if (data) return data
+            else return { error: `carrito ${id} no encontrado` }
         } catch (error) {
-            console.log(error);
             return error;
         }
     }
 
     async deleteById(id) {
         try {
-            await this.collection.doc(id).delete();
-            return await this.getAll();
+            const data = await this.getById(id)
+            if (data.id) {
+                await this.collection.doc(id).delete()
+                return await this.getAll();
+            } else return data
         } catch (error) {
-            console.log(error);
             return error;
         }
     }

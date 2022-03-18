@@ -1,8 +1,8 @@
 const fs = require('fs')
 
 class ContenedorCarritoFS {
-    constructor(config) {
-        this.ruta = config.fileSystem.carritosPath
+    constructor(path) {
+        this.ruta = path
     }
 
     create() {
@@ -20,7 +20,7 @@ class ContenedorCarritoFS {
         }
         carts.push(newCart)
         fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
-        return newCart
+        return this.getAll()
     }
 
     getAll() {
@@ -34,52 +34,51 @@ class ContenedorCarritoFS {
     }
 
     saveProd(elem, id) {
-        if (elem.id){
+        if (elem.id) {
             const carts = this.getAll()
             const index = carts.findIndex(c => c.id == id)
             if (index !== -1) {
                 carts[index].productos.push(elem)
                 fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
-                return carts[index].productos
+                return carts[index]
             } else {
-                console.log({ error: `carrito no encontrado` })
+                return { error: `carrito ${id} no encontrado` }
             }
-        } 
+        }
     }
 
     getById(id) {
         const carts = this.getAll()
         const found = carts.find(cart => cart.id == id)
-        return found || { error: `carrito no encontrado` }
+        return found || { error: `carrito ${id} no encontrado` }
     }
 
     deleteProd(prod, cartId) {
         const carts = this.getAll()
         const cartIndex = carts.findIndex(c => c.id == cartId)
-
         if (cartIndex !== -1) {
             const prodIndex = carts[cartIndex].productos.findIndex(p => p.id == prod.id)
-            if (prodIndex !== -1){
+            if (prodIndex !== -1) {
                 carts[cartIndex].productos.splice(prodIndex, 1)
                 fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
-                return carts[cartIndex].productos
+                return carts[cartIndex]
             } else {
-                return { error: `elemento no encontrado` }
+                return { error: `Producto ${prod.id} no encontrado` }
             }
         } else {
-            return { error: `carrito no encontrado` }
+            return { error: `carrito ${cartId} no encontrado` }
         }
     }
 
-    deleteById(id) {
+    deleteById(cartId) {
         const carts = this.getAll()
-        const index = carts.findIndex(cart => cart.id == id)
+        const index = carts.findIndex(cart => cart.id == cartId)
         if (index !== -1) {
             carts.splice(index, 1)
             fs.writeFileSync(this.ruta, JSON.stringify(carts, null, 2))
-            return carts
+            return this.getAll()
         } else {
-            return { error: `elemento no encontrado` }
+            return { error: `carrito ${cartId} no encontrado` }
         }
     }
 }

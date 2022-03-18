@@ -1,8 +1,4 @@
 const mongoose = require("mongoose");
-const config = require("../config.js");
-
-mongoose.connect(config.mongo.url, config.mongo.options);
-
 class ContenedorMongo {
   constructor(collection, schema) {
     this.collection = mongoose.model(collection, schema);
@@ -19,7 +15,7 @@ class ContenedorMongo {
       }
       const newElem = { productos: [], id: newId };
       await this.collection(newElem).save();
-      return this.getAll();
+      return await this.getAll();
     } catch (error) {
       return error;
     }
@@ -36,12 +32,12 @@ class ContenedorMongo {
 
   async saveProd(prod, cartId) {
     try {
-      console.log(prod)
-      if(prod != []){
-        return await this.collection.findOneAndUpdate(
+      if (prod) {
+        await this.collection.findOneAndUpdate(
           { id: cartId },
           { $push: { productos: prod } }
         );
+        return await this.getById(cartId)
       }
     } catch (error) {
       return error;
@@ -50,44 +46,53 @@ class ContenedorMongo {
 
   async deleteProd(prod, cartId) {
     try {
-      return await this.collection.updateOne(
-        { id: cartId },
-        [
-          {
-            $set: {
-              productos: {
-                $let: {
-                  vars: { ix: { $indexOfArray: ["$productos", prod] } },
-                  in: {
-                    $cond: [{ $eq: ["$$ix", 0] }, {
-                      $concatArrays: [
-                        { $slice: ["$productos", "$$ix"] },
-                        { $slice: ["$productos", { $add: [1, "$$ix"] }, { $size: "$productos" }] }
-                      ]
-                    },
-                    {
-                      $concatArrays: [
-                        { $slice: ["$productos", 0, "$$ix"] },
-                        { $slice: ["$productos", { $add: [1, "$$ix"] }, { $size: "$productos" }] }
+      const cart = await this.getById(cartId)
+      const index = cart.productos.findIndex(e => e.id == prod.id)
+      if (index == -1) {
+        return { error: `producto ${prod.id} no encontrado` }
+      } else {
+        await this.collection.updateOne(
+          { id: cartId },
+          [
+            {
+              $set: {
+                productos: {
+                  $let: {
+                    vars: { ix: { $indexOfArray: ["$productos", prod] } },
+                    in: {
+                      $cond: [{ $eq: ["$$ix", 0] }, {
+                        $concatArrays: [
+                          { $slice: ["$productos", "$$ix"] },
+                          { $slice: ["$productos", { $add: [1, "$$ix"] }, { $size: "$productos" }] }
+                        ]
+                      },
+                      {
+                        $concatArrays: [
+                          { $slice: ["$productos", 0, "$$ix"] },
+                          { $slice: ["$productos", { $add: [1, "$$ix"] }, { $size: "$productos" }] }
+                        ]
+                      }
                       ]
                     }
-                    ]
                   }
                 }
               }
             }
-          }
-        ])
+          ])
+        return await this.getById(cartId)
+      }
     } catch (error) {
-      console.log(error)
-      return error;
+      return error
     }
   }
 
   async getById(id) {
     try {
       let elem = await this.collection.find({ id: id });
-      if (elem) return elem;
+      if (elem[0]) {
+        return elem[0]
+      }
+      else return { error: `carrito ${id} no encontrado` }
     } catch (error) {
       return error;
     }
@@ -95,8 +100,13 @@ class ContenedorMongo {
 
   async deleteById(id) {
     try {
-      await this.collection.deleteOne({ id: id });
-      return this.getAll();
+      const cart = await this.getById(id)
+      if (cart.id) {
+        await this.collection.deleteOne(cart);
+        return await this.getAll()
+      } else {
+        return { error: `carrito ${id} no encontrado` }
+      }
     } catch (error) {
       return error;
     }
