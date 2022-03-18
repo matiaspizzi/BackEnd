@@ -1,0 +1,22 @@
+La base de datos se especifica en config.js
+
+
+productos:
+
+metodo:			devuelve:
+	post '/'			arr de objs "producto"
+	put '/:id'			obj "producto"
+	delete'/:id'		arr de objs "producto"
+	get '/'			arr de objs "producto"
+	get '/:id'			obj "producto"
+
+---------------------------------------------------------
+
+carritos:
+
+metodo: 					devuelve:
+	post "/"					arr de objs "carrito"
+	delete "/:id"				arr de objs "carrito"
+	post "/:id/productos/:id_prod"	obj "carrito" con array de objs "producto"
+	get "/:id/productos"			arr de objs "producto"
+	delete "/:id/productos/:id_prod"	obj "carrito" con array de objs "producto"
