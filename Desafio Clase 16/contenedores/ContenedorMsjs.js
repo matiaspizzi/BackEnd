@@ -6,16 +6,18 @@ class ContenedorMsjs{
         this.tabla = tabla
 
         knex.schema.dropTableIfExists(`${this.tabla}`)
-        knex.schema.createTable(`${this.tabla}`, table => {
-            table.increments('id').primary().notNullable()
-            table.string('autor').notNullable()
-            table.string('texto').notNullable()
-            table.string('fyh').notNullable()
-        }).then(() => {
-            console.log('table created')
-        }).catch((err) => {
-            console.log(err)
-            throw err
+        .then(() => {
+            knex.schema.createTable(`${this.tabla}`, table => {
+                table.increments('id').primary().notNullable()
+                table.string('autor').notNullable()
+                table.string('texto').notNullable()
+                table.string('fyh').notNullable()
+            }).then(() => {
+                console.log('table created')
+            }).catch((err) => {
+                console.log(err)
+                throw err
+            })
         })
     }
 
