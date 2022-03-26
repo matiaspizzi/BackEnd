@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const firebase = require("firebase-admin");
 
 const config = {
-    DB: 'fs', // <-------- Puede ser: 'firebase', 'mongo' o 'fs'
+    DB: 'firebase', // <-------- Puede ser: 'firebase', 'mongo' o 'fs'
 
     fileSystem: {
         carritosPath: 'src/data/carritos.json',
@@ -16,8 +16,7 @@ const config = {
         options: {
             serverSelectionTimeoutMS: 5000
         }
-    },
-    // "initializeApp" se encuentra en ContenedorProductosFirebase.js 
+    }, 
     firebase: {
         collectionNameProductos: 'productos',
         collectionNameCarritos: 'carritos',
