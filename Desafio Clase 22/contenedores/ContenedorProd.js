@@ -1,5 +1,5 @@
-const {options} = require('../src/options/SQLite3')
-const knex = require('knex')(options)
+const config = require('../src/config.js')
+const knex = require('knex')(config.sqlite)
 
 class ContenedorProd {
     constructor(tabla) {

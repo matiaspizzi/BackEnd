@@ -1,68 +1,72 @@
-const {options} = require('../src/options/mariaDB')
-const knex = require('knex')(options)
-
+var firebase = require("firebase-admin")
 class ContenedorMsjs{
-    constructor(tabla){
-        this.tabla = tabla
-
-        knex.schema.dropTableIfExists(`${this.tabla}`).then(() => {
-            knex.schema.createTable(`${this.tabla}`, table => {
-                table.increments('id').primary().notNullable()
-                table.string('autor').notNullable()
-                table.string('texto').notNullable()
-                table.string('fyh').notNullable()
-            }).then(() => {
-                console.log('table created')
-            }).catch((err) => {
-                console.log(err)
-                throw err
-            })
-        })
+    constructor(collection) {
+        this.collection = firebase.firestore().collection(collection)
     }
 
-    async getAll(){
-        try{
-            return await knex.from(`${this.tabla}`).select("*")
-        } catch(err) {
-            console.log(err)
-            throw err
-        } 
-    }
-    
-    async getById(id){
-        try{
-            return await knex.from(`${this.tabla}`).where({ id: id }).select()
-        } catch(err) {
-            console.log(err)
-            throw err
+    async getAll() {
+        try {
+            const result = [];
+            const snapshot = await this.collection.get();
+            snapshot.forEach((doc) => {
+                result.push({ id: doc.id, ...doc.data() });
+            });
+            return result;
+        } catch (error) {
+            return error;
         }
     }
     
-    async save(obj){
-        try{
-            return await knex(`${this.tabla}`).insert(obj)
-        } catch(err) {
-            console.log(err)
-            throw err
+    async getById(id) {
+        try {
+            const doc = await this.collection.doc(id).get();
+            const data = doc.data();
+            if (data) return data
+            else return { error: `mensaje ${id} no encontrado` }
+        } catch (error) {
+            return error;
+        }
+    }
+    
+    async save(elem) {
+        try {
+            let elems = await this.getAll()
+            let newId;
+            if (elems.length == 0) {
+                newId = 1;
+            } else {
+                newId = elems[elems.length - 1].id + 1;
+            }
+            const newElem = { ...elem, timestamp: Date.now(), id: newId };
+            await this.collection.doc(`${newId}`).set(newElem);
+            return await this.getAll()
+        } catch (error) {
+            return error;
         }
     }
     
 
-    async deleteById(id){
-        try{
-            return await knex.from(`${this.tabla}`).where({ id: id }).del()
-        } catch(err) {
-            console.log(err)
-            throw err
+    async deleteById(id) {
+        try {
+            const data = await this.getById(id)
+            if (data.id) {
+                await this.collection.doc(id).delete()
+                return await this.getAll();
+            } else return data
+        } catch (error) {
+            return error;
         }
     }
 
-    async deleteAll(){
-        try{
-            return await knex.from(`${this.tabla}`).del()
-        } catch(err) {
-            console.log(err)
-            throw err
+    async deleteAll() {
+        try {
+            const snapshot = await this.collection.get();
+            snapshot.forEach((doc) => {
+                this.collection.doc(doc.id).delete()
+            });
+            return await this.getAll();
+        } catch (error) {
+            return error;
         }
     }
 }

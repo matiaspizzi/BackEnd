@@ -1,15 +1,18 @@
 const { faker } = require('@faker-js/faker');
 faker.locale = 'es'
 
-
-const products = []
-for(let i=0; i < 5; i++){
+function generarProductosFaker() {
+ let products = []
+ for (let i = 0; i < 5; i++) {
   const newProduct = {
-    title: faker.commerce.product(),
-    price: faker.commerce.price(),
-    thumbnail: faker.image.image()
+   id: faker.datatype.uuid(),
+   title: faker.commerce.product(),
+   price: faker.commerce.price(),
+   thumbnail: faker.image.image()
   }
   products.push(newProduct)
+ }
+ return products
 }
 
-module.exports =  products
+module.exports = { generarProductosFaker };
