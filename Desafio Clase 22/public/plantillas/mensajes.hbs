@@ -1,9 +1,9 @@
-  {{#if mensajes.lenght}}
+  {{#if mensajes}}
     {{#each mensajes}}
       <div class="message-item">
-        <span class="author">{{this.autor.email}}</span>
+        <span class="author">{{this.autor.id}}</span>
         <span>
-          [<span class="date">{{this.fecha}}</span>]:
+          [<span class="date">{{this.fyh}}</span>]:
         </span>
         <span class="message">{{this.texto}}</span>
       </div>
