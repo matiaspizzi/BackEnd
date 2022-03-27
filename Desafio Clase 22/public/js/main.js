@@ -42,6 +42,10 @@ const inputAvatar = document.getElementById('inputAvatar')
 const inputMensaje = document.getElementById('inputMensaje')
 const btnEnviar = document.getElementById('btnEnviar')
 
+const schemaAutor = new normalizr.schema.Entity('autor', {}, { idAttribute: 'email' });
+const schemaMensaje = new normalizr.schema.Entity('texto', { author: schemaAutor }, { idAttribute: 'id' })
+const schemaMensajes = new normalizr.schema.Entity('mensajes', { mensajes: [schemaMensaje] }, { idAttribute: 'id' })
+
 const formPublicarMensaje = document.getElementById('formPublicarMensaje')
 formPublicarMensaje.addEventListener('submit', e => {
     e.preventDefault()
@@ -57,34 +61,30 @@ formPublicarMensaje.addEventListener('submit', e => {
         }, 
         texto: inputMensaje.value  
     }
+
     socket.emit('nuevoMensaje', mensaje)
     formPublicarMensaje.reset()
     inputMensaje.focus()
 })
 
-socket.on('mensajes', mensajes => {
-    console.log(mensajes);
-    const html = showMensajes(mensajes)
+socket.on('mensajes', async mensajesNorm => {
+
+    const mensajesNormLength = JSON.stringify(mensajesNorm).length
+    const mensajesDenorm = normalizr.denormalize(mensajesNorm.result, schemaMensajes, mensajesNorm.entities)
+    const mensajesDenormLength = JSON.stringify(mensajesDenorm).length
+    const reduc = parseInt((mensajesDenormLength * 100) / mensajesNormLength)
+    console.log(`Normalizado: ${mensajesNormLength}, Desnormalizado: ${mensajesDenormLength}, Compresion: ${100-reduc}%`)
+    const html = showMensajes(await mensajesDenorm.mensajes)
+    console.log(mensajesDenorm.mensajes)
     document.getElementById('mensajes').innerHTML = html
 })
 
-const autor = new normalizr.schema.Entity('autor', {}, { idAttribute: 'email' })
-const texto = new normalizr.schema.Entity('texto', { autor: autor },{ idAttribute: 'id' })
-const centroMensajes = new normalizr.schema.Entity('centroMensajes', {
-  autores: [autor],
-  mensajes: [text]
-}, { idAttribute: 'id' })
-
 function showMensajes(mensajes) {
-    const normalizedLength = JSON.stringify(mensajes).length
-    const data = normalizr.denormalize(mensajes.result, centroMensajes, mensajes.entities)
-    const denormalizedLength = JSON.stringify(data).length
-    console.log(`(Compresión: ${Math.floor(100 * normalizedLength / denormalizedLength)}%)`)
     return fetch('../plantillas/mensajes.hbs')
         .then(respuesta => respuesta.text())
         .then(plantilla => {
             const template = Handlebars.compile(plantilla)
-            const html = template({ mensajes: data.mensajes })
+            const html = template({ mensajes: mensajes })
             return html
         })
 }
