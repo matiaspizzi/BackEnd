@@ -67,18 +67,19 @@ formPublicarMensaje.addEventListener('submit', e => {
     inputMensaje.focus()
 })
 
-socket.on('mensajes', mensajesNorm => {
+socket.on('mensajes', async mensajesNorm => {
 
     const mensajesNormLength = JSON.stringify(mensajesNorm).length
     const mensajesDenorm = normalizr.denormalize(mensajesNorm.result, schemaMensajes, mensajesNorm.entities)
     const mensajesDenormLength = JSON.stringify(mensajesDenorm).length
     const reduc = parseInt((mensajesDenormLength * 100) / mensajesNormLength)
     console.log(`Normalizado: ${mensajesNormLength}, Desnormalizado: ${mensajesDenormLength}, Compresion: ${100-reduc}%`)
-    const html = showMensajes(mensajesDenorm.mensajes)
+    const html = await showMensajes(mensajesDenorm.mensajes)
+    document.getElementById('compression').innerHTML = `Compresion: ${100-reduc}%`
     document.getElementById('mensajes').innerHTML = html
 })
 
-function showMensajes(mensajes) {
+async function showMensajes(mensajes) {
     console.log(mensajes)
     return fetch('../plantillas/mensajes.hbs')
         .then(respuesta => respuesta.text())
