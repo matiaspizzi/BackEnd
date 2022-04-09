@@ -12,7 +12,7 @@ passport.deserializeUser( async (id, done) => {
 });
 
 passport.use('local-register', new LocalStrategy({
-    useremailField: 'email',
+    usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
@@ -30,7 +30,7 @@ passport.use('local-register', new LocalStrategy({
 }));
 
 passport.use('local-login', new LocalStrategy({
-    useremailField: 'email',
+    usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
@@ -38,7 +38,7 @@ passport.use('local-login', new LocalStrategy({
     if (!user) {
         return done(null, false, req.flash('loginMessage', 'Invalid email.'))
     } 
-    if (!user.matchPassword(password)) {
+    if (!user.matchPassword(password, user.password)) {
         return done(null, false, req.flash('loginMessage', 'Invalid password.'));
     }
     done(null, user);

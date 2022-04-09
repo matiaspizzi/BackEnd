@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt-nodejs": "^0.0.3",
+    "bcrypt": "^5.0.1",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
@@ -22,7 +22,6 @@
     "knex": "^0.95.15",
     "mongodb": "^4.5.0",
     "mongoose": "^6.2.10",
-    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.15",
     "normalizr": "^3.6.1",
@@ -32,6 +31,7 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
-    "@faker-js/faker": "^6.0.0"
+    "@faker-js/faker": "^6.0.0",
+    "morgan": "^1.10.0"
   }
 }
