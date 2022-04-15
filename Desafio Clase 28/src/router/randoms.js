@@ -6,7 +6,7 @@ const path = require('path')
 router.get('/randoms/:cant?', (req, res) => {
     const cant = req.params.cant
     if(!cant){
-        cant = 1000
+        cant = 100000000
     }
     console.log(cant)
     const child = fork(path.join(process.cwd(), '/src/utils/calcularRandom.js'))
