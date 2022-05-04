@@ -4,6 +4,7 @@ const MongoStore = require('connect-mongo')
 const mongoose = require('mongoose')
 const yargs = require('yargs/yargs')(process.argv.slice(2))
 const os = require('os')
+const logger = require('./utils/logger.js')
 
 const args = yargs
     .alias({
@@ -59,7 +60,7 @@ const config = {
 
 mongoose.connect(config.mongo.url, {})
     .then(db => console.log('MongoDB connected'))
-    .catch(err => console.log(err))
+    .catch(err => logger.error(`${err}`))
 
 firebase.initializeApp({
     credential: firebase.credential.cert(config.firebase)
