@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    
+</head>
+<body id="body">
+    <div class="container mt-3">
+        <h1 class="alert alert-success">
+            Bienvenido, <%= user.email %>
+                <button class="btn btn-warning float-right mt-2" onclick="location.href='/logout'">
+                    Desloguear
+                </button>
+        </h1>
+        <button class="btn btn-success mt-3 mb-5" onclick="location.href='/info'">
+            Info
+        </button>
+    </div>
+
+    <div class="container mt-3">
+        <div class="jumbotron">
+            <div>
+                <h1>Ingrese los datos</h1>
+                <br>
+                <form id="formAgregarProducto">
+                    <div class="form-group">
+                        <label for="title"><b>title</b></label>
+                        <input type="text" id="title" class="form-control" name="title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price"><b>price</b></label>
+                        <input type="number" id="price" class="form-control" name="price">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="thumbnail"><b>thumbnail</b></label>
+                        <input type="text" id="thumbnail" class="form-control" name="thumbnail">
+                    </div>
+
+                    <button class="btn btn-success mt-3 mb-5" type="submit" value="Send">Submit</button>
+                </form>
+            </div>
+
+            <div id="listaProductos"></div>
+
+            <div class="jumbotron">
+                <h1>Centro de Mensajes</h1>
+                <div id="compression"></div>
+            
+                <input type="email" id="inputEmail" class="form-control w-50 my-2 mr-2" placeholder="Ingresá tu email">
+                <input type="text" id="inputName" class="form-control w-50 my-2 mr-2" placeholder="Ingresá tu nombre">
+                <input type="text" id="inputSurname" class="form-control w-50 my-2 mr-2" placeholder="Ingresá tu apellido">
+                <input type="number" id="inputAge" class="form-control w-50 my-2 mr-2" placeholder="Ingresá tu edad">
+                <input type="text" id="inputAlias" class="form-control w-50 my-2 mr-2" placeholder="Ingresá tu alias">
+                <input type="url" id="inputAvatar" class="form-control w-50 my-2 mr-2" placeholder="Ingresá url de tu avatar">
+                
+                <hr>
+            
+                <div id="mensajes"></div>
+            
+                <form id="formPublicarMensaje" class="form-inline" autocomplete="off">
+                    <div class="form-group">
+                        <input disabled id="inputMensaje" type="text" class="form-control my-2 mr-2"
+                                placeholder="Ingresá un mensaje...">
+                        <button disabled id="btnEnviar" type="submit" class="btn btn-primary my-2">Enviar!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/socket.io/socket.io.min.js"></script>
+    <script> const socket = io(); </script>
+    <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
+    <script src="/js/main.js"></script>
+
+</body>
+</html>
