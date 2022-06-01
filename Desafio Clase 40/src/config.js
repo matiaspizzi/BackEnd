@@ -1,0 +1,61 @@
+require('dotenv').config()
+const firebase = require("firebase-admin");
+const MongoStore = require('connect-mongo')
+const mongoose = require('mongoose')
+const yargs = require('yargs/yargs')(process.argv.slice(2))
+const os = require('os')
+const logger = require('./utils/logger.utils.js')
+
+const args = yargs
+    .alias({
+        p: 'port',
+        m: 'modo'
+    })
+    .default({
+        port: 8080,
+        modo: 'fork'
+    })    
+    .argv
+
+const config = {
+    yarg: args,
+    port: args.port,
+    modo: args.modo,
+    cantProcesadores: os.cpus().length,
+    mongo: {
+        url: process.env.MONGO_ATLAS_URL,
+        database: "Desafios",
+        collection: "users"
+    },
+    session: {
+        store: MongoStore.create({ mongoUrl: `${process.env.MONGO_ATLAS_URL}`}),
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 60000,
+        },
+    },
+    firebase: {
+        type: process.env.TYPE,
+        project_id: process.env.PROJECT_ID,
+        private_key_id: process.env.PRIVATE_KEY_ID,
+        private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+        client_email: process.env.CLIENT_EMAIL,
+        client_id: process.env.CLIENT_ID,
+        auth_uri: process.env.AUTH_URI,
+        token_uri: process.env.TOKEN_URI,
+        auth_provider_x509_cert_url: process.env.AUT_PROVIDER_X509_CERT_URL,
+        client_x509_cert_url: process.env.CLIENT_X509_CERT_URL
+    }
+}
+
+mongoose.connect(config.mongo.url, {})
+    .then(db => logger.info('MongoDB connected'))
+    .catch(err => logger.error(err))
+
+firebase.initializeApp({
+    credential: firebase.credential.cert(config.firebase)
+});
+
+module.exports = config
