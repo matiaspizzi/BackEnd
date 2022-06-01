@@ -5,6 +5,7 @@ const MensajesDto = require('../dto/Mensajes.dto.js')
 
 class ContenedorMsjs extends MensajesDao{
     constructor() {
+        super()
         this.collection = firebase.firestore().collection('mensajes')
     }
 
@@ -43,7 +44,7 @@ class ContenedorMsjs extends MensajesDao{
             } else {
                 newId = elems[elems.length - 1].id + 1;
             }
-            const newElem = { ...elem, id: newId };
+            const newElem = new MensajesDto(elem, newId);
             await this.collection.doc(`${newId}`).set(newElem);
             return await this.getAll()
         } catch (err) {

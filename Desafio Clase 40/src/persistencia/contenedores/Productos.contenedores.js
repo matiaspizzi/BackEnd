@@ -4,6 +4,7 @@ const ProductosDao = require('../dao/Productos.dao.js')
 
 class ContenedorProd extends ProductosDao{
     constructor() {
+        super()
         this.collection = firebase.firestore().collection('productos')
     }
 
