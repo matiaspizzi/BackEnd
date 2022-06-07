@@ -44,3 +44,18 @@
 [24/5/2022 19:34:40] [warn]: GET / no implementado
 [31/5/2022 22:04:29] [warn]: GET /favicon.ico no implementado
 [31/5/2022 22:15:54] [warn]: GET /favicon.ico no implementado
+[7/6/2022 14:44:31] [warn]: GET /favicon.ico no implementado
+[7/6/2022 14:45:50] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:46:00] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:46:03] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:49:35] [warn]: GET /alt=%22not no implementado
+[7/6/2022 14:49:45] [warn]: GET /alt=%22not no implementado
+[7/6/2022 14:49:58] [warn]: GET /alt=%22not no implementado
+[7/6/2022 14:50:15] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:56:21] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:58:53] [error]: logger is not defined
+[7/6/2022 14:59:34] [error]: err is not defined
+[7/6/2022 15:00:03] [error]: Messages validation failed: fyh: Path `fyh` is required., autor: Path `autor` is required., texto: Path `texto` is required.
+[7/6/2022 15:05:26] [error]: Messages validation failed: fyh: Path `fyh` is required., autor: Path `autor` is required., texto: Path `texto` is required.
+[7/6/2022 15:08:55] [error]: Messages validation failed: fyh: Path `fyh` is required., autor: Path `autor` is required., texto: Path `texto` is required.
+[7/6/2022 15:10:59] [error]: Messages validation failed: fyh: Path `fyh` is required.

@@ -16,7 +16,6 @@ socket.on('productos', async productos => {
     const res = await fetch(`http://localhost:8080/api/productos-test`)
     const prodsMock = await res.json()
     const arrayProd =  prodsMock.concat(productos)
-    console.log(arrayProd)
     showProducts(arrayProd).then(html => {
         document.getElementById('listaProductos').innerHTML = html
     })
@@ -72,18 +71,17 @@ socket.on('mensajes', async mensajesNorm => {
     const mensajesDenorm = normalizr.denormalize(mensajesNorm.result, schemaMensajes, mensajesNorm.entities)
     const mensajesDenormLength = JSON.stringify(mensajesDenorm).length
     const reduc = parseInt((mensajesDenormLength * 100) / mensajesNormLength)
-    console.log(`Normalizado: ${mensajesNormLength}, Desnormalizado: ${mensajesDenormLength}, Compresion: ${100-reduc}%`)
     const html = await showMensajes(mensajesDenorm.mensajes)
     document.getElementById('compression').innerHTML = `Compresion: ${100-reduc}%`
     document.getElementById('mensajes').innerHTML = html
 })
 
 async function showMensajes(mensajes) {
-    console.log(mensajes)
     return fetch('../plantillas/mensajes.hbs')
         .then(respuesta => respuesta.text())
         .then(plantilla => {
             const template = Handlebars.compile(plantilla)
+            console.log(mensajes)
             const html = template({ mensajes: mensajes })
             return html
         })

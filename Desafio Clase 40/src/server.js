@@ -16,12 +16,12 @@ const app = express();
 const server = http.createServer(app);
 const io = new Socket(server);
 
-const ProductosApi = require('./persistencia/api/Productos.api.js')
-const MensajesApi = require('./persistencia/api/Mensajes.api.js')
+const ProductosController = require('./controllers/productos.controllers.js')
+const MensajesController = require('./controllers/mensajes.controllers.js')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('./public'))
+app.use(express.static("./public"));
 app.use(compression())
 app.use(cookieParser());
 app.use(session(config.session))
@@ -60,15 +60,15 @@ app.use(function (req, res, next) {
 
 io.on('connection', async socket => {
     logger.info('Nuevo cliente conectado')
-    socket.emit('productos', await ProductosApi.getAll())
+    socket.emit('productos', await ProductosController.getAll())
     socket.on('update', async producto => {
-        await ProductosApi.save(producto)
-        io.sockets.emit('productos', await ProductosApi.getAll())
+        await ProductosController.save(producto)
+        io.sockets.emit('productos', await ProductosController.getAll())
     })
-    socket.emit('mensajes', normalizarMensajes(await MensajesApi.getAll()));
-    socket.on('nuevoMensaje', async mensaje => {
-        await MensajesApi.save(mensaje)
-        io.sockets.emit('mensajes', normalizarMensajes(await MensajesApi.getAll()))
+    socket.emit('mensajes', normalizarMensajes(await MensajesController.getAll()));
+    socket.on('nuevoMensaje', async mensaje => {  
+        await MensajesController.save(mensaje)
+        io.sockets.emit('mensajes', normalizarMensajes(await MensajesController.getAll()))
     })
 })
 
