@@ -40,10 +40,6 @@ const inputAvatar = document.getElementById('inputAvatar')
 const inputMensaje = document.getElementById('inputMensaje')
 const btnEnviar = document.getElementById('btnEnviar')
 
-const schemaAutor = new normalizr.schema.Entity('autor', {}, { idAttribute: 'email' });
-const schemaMensaje = new normalizr.schema.Entity('texto', { author: schemaAutor }, { idAttribute: 'id' })
-const schemaMensajes = new normalizr.schema.Entity('mensajes', { mensajes: [schemaMensaje] }, { idAttribute: 'id' })
-
 const formPublicarMensaje = document.getElementById('formPublicarMensaje')
 formPublicarMensaje.addEventListener('submit', e => {
     e.preventDefault()
@@ -65,14 +61,10 @@ formPublicarMensaje.addEventListener('submit', e => {
     inputMensaje.focus()
 })
 
-socket.on('mensajes', async mensajesNorm => {
+socket.on('mensajes', async mensajes => {
 
-    const mensajesNormLength = JSON.stringify(mensajesNorm).length
-    const mensajesDenorm = normalizr.denormalize(mensajesNorm.result, schemaMensajes, mensajesNorm.entities)
-    const mensajesDenormLength = JSON.stringify(mensajesDenorm).length
-    const reduc = parseInt((mensajesDenormLength * 100) / mensajesNormLength)
-    const html = await showMensajes(mensajesDenorm.mensajes)
-    document.getElementById('compression').innerHTML = `Compresion: ${100-reduc}%`
+    const html = await showMensajes(mensajes)
+    console.log(mensajes)
     document.getElementById('mensajes').innerHTML = html
 })
 

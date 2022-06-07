@@ -59,3 +59,4 @@
 [7/6/2022 15:05:26] [error]: Messages validation failed: fyh: Path `fyh` is required., autor: Path `autor` is required., texto: Path `texto` is required.
 [7/6/2022 15:08:55] [error]: Messages validation failed: fyh: Path `fyh` is required., autor: Path `autor` is required., texto: Path `texto` is required.
 [7/6/2022 15:10:59] [error]: Messages validation failed: fyh: Path `fyh` is required.
+[7/6/2022 15:40:31] [error]: mensaje is not defined

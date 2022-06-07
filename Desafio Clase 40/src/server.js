@@ -1,6 +1,5 @@
 const express = require('express')
 const config = require('./config.js')
-const { normalizarMensajes } = require('./utils/normalizr.utils.js')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const passport = require('passport')
@@ -65,10 +64,10 @@ io.on('connection', async socket => {
         await ProductosController.save(producto)
         io.sockets.emit('productos', await ProductosController.getAll())
     })
-    socket.emit('mensajes', normalizarMensajes(await MensajesController.getAll()));
-    socket.on('nuevoMensaje', async mensaje => {  
+    socket.emit('mensajes', await MensajesController.getAll());
+    socket.on('nuevoMensaje', async mensaje => { 
         await MensajesController.save(mensaje)
-        io.sockets.emit('mensajes', normalizarMensajes(await MensajesController.getAll()))
+        io.sockets.emit('mensajes', await MensajesController.getAll())
     })
 })
 

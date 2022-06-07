@@ -1,11 +1,11 @@
   {{#if mensajes}}
     {{#each mensajes}}
       <div class="message-item">
-        <span class="author">{{this._doc.autor.id}}</span>
+        <span class="author">{{this.autor.id}}</span>
         <span>
-          [<span class="date">{{this._doc.fyh}}</span>]:
+          [<span class="date">{{this.fyh}}</span>]:
         </span>
-        <span class="message">{{this._doc.texto}}</span>
+        <span class="message">{{this.texto}}</span>
       </div>
     {{/each}}
   {{/if}}
