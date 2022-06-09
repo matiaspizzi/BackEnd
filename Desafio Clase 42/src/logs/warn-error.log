@@ -1,0 +1,77 @@
+[3/5/2022 21:29:36] [warn]: GET /socket.io/socket.io.js no implementado
+[3/5/2022 21:29:50] [warn]: GET /ghfj no implementado
+[3/5/2022 21:30:00] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 20:57:18] [warn]: GET /favicon.ico no implementado
+[10/5/2022 20:57:24] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 20:57:36] [warn]: POST /api/productos no implementado
+[10/5/2022 20:58:36] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 20:59:45] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 20:59:49] [warn]: POST /api/productos no implementado
+[10/5/2022 20:59:52] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 21:01:06] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 21:02:30] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 21:08:54] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 21:09:18] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 21:14:24] [warn]: GET /static/socket.io/node_modules/socket.io-client/socket.io.js no implementado
+[10/5/2022 21:15:46] [warn]: GET /static/socket.io/node_modules/socket.io-client/socket.io.js no implementado
+[10/5/2022 21:23:44] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 21:30:39] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 21:32:32] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:32:32] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 21:36:23] [warn]: GET /socket.io/socket.io.js no implementado
+[10/5/2022 21:36:24] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:37:02] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:38:22] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:42:44] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:42:50] [warn]: POST /api/productos no implementado
+[10/5/2022 21:48:20] [warn]: POST /api/productos no implementado
+[10/5/2022 21:48:24] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:48:25] [warn]: POST /api/productos no implementado
+[10/5/2022 21:48:27] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:48:44] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:48:48] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:51:03] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:51:13] [warn]: GET /js/main.js no implementado
+[10/5/2022 21:51:26] [warn]: GET /js/main.js no implementado
+[12/5/2022 16:52:17] [warn]: GET /favicon.ico no implementado
+[12/5/2022 16:52:22] [warn]: GET /js/main.js no implementado
+[12/5/2022 16:53:17] [warn]: GET /js/main.js no implementado
+[12/5/2022 17:01:31] [warn]: GET /js/main.js no implementado
+[12/5/2022 17:03:33] [warn]: GET /prueba no implementado
+[12/5/2022 17:04:27] [warn]: GET /prueba no implementado
+[24/5/2022 19:33:28] [warn]: GET / no implementado
+[24/5/2022 19:33:44] [warn]: GET / no implementado
+[24/5/2022 19:34:40] [warn]: GET / no implementado
+[31/5/2022 22:04:29] [warn]: GET /favicon.ico no implementado
+[31/5/2022 22:15:54] [warn]: GET /favicon.ico no implementado
+[7/6/2022 14:44:31] [warn]: GET /favicon.ico no implementado
+[7/6/2022 14:45:50] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:46:00] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:46:03] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:49:35] [warn]: GET /alt=%22not no implementado
+[7/6/2022 14:49:45] [warn]: GET /alt=%22not no implementado
+[7/6/2022 14:49:58] [warn]: GET /alt=%22not no implementado
+[7/6/2022 14:50:15] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:56:21] [error]: Cannot read properties of undefined (reading 'status')
+[7/6/2022 14:58:53] [error]: logger is not defined
+[7/6/2022 14:59:34] [error]: err is not defined
+[7/6/2022 15:00:03] [error]: Messages validation failed: fyh: Path `fyh` is required., autor: Path `autor` is required., texto: Path `texto` is required.
+[7/6/2022 15:05:26] [error]: Messages validation failed: fyh: Path `fyh` is required., autor: Path `autor` is required., texto: Path `texto` is required.
+[7/6/2022 15:08:55] [error]: Messages validation failed: fyh: Path `fyh` is required., autor: Path `autor` is required., texto: Path `texto` is required.
+[7/6/2022 15:10:59] [error]: Messages validation failed: fyh: Path `fyh` is required.
+[7/6/2022 15:40:31] [error]: mensaje is not defined
+[9/6/2022 19:02:13] [warn]: GET /favicon.ico no implementado
+[9/6/2022 19:27:41] [error]: Cannot read properties of undefined (reading 'id')
+[9/6/2022 19:31:43] [error]: err is not defined
+[9/6/2022 19:32:39] [error]: products validation failed: thumbnail: Path `thumbnail` is required., price: Path `price` is required., title: Path `title` is required.
+[9/6/2022 19:35:07] [error]: products validation failed: thumbnail: Path `thumbnail` is required., price: Path `price` is required., title: Path `title` is required.
+[9/6/2022 19:35:55] [error]: products validation failed: thumbnail: Path `thumbnail` is required., price: Path `price` is required., title: Path `title` is required.
+[9/6/2022 19:39:49] [warn]: GET /test no implementado
+[9/6/2022 19:40:23] [error]: Cannot read properties of undefined (reading 'id')
+[9/6/2022 19:41:28] [warn]: GET /test no implementado
+[9/6/2022 19:45:01] [error]: Cannot read properties of undefined (reading 'id')
+[9/6/2022 19:45:18] [error]: Cannot read properties of undefined (reading 'id')
+[9/6/2022 19:46:42] [error]: Cannot read properties of undefined (reading 'id')
+[9/6/2022 19:59:22] [warn]: GET /test no implementado
+[9/6/2022 19:59:28] [warn]: GET /test no implementado
+[9/6/2022 19:59:37] [warn]: GET /test no implementado
