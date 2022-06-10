@@ -75,3 +75,12 @@
 [9/6/2022 19:59:22] [warn]: GET /test no implementado
 [9/6/2022 19:59:28] [warn]: GET /test no implementado
 [9/6/2022 19:59:37] [warn]: GET /test no implementado
+[9/6/2022 19:59:47] [warn]: GET /test no implementado
+[9/6/2022 20:27:35] [warn]: GET /test no implementado
+[9/6/2022 20:27:53] [warn]: GET /test no implementado
+[9/6/2022 20:28:04] [warn]: GET /test no implementado
+[9/6/2022 21:02:30] [warn]: GET /api/productos/api/productos no implementado
+[9/6/2022 21:03:11] [warn]: GET //api/productos no implementado
+[9/6/2022 21:45:02] [warn]: GET /favicon.ico no implementado
+[9/6/2022 22:32:21] [error]: Cannot set properties of undefined (setting 'title')
+[9/6/2022 22:33:17] [error]: Cannot set properties of undefined (setting 'title')

@@ -26,16 +26,20 @@ class ProductosMemoryDAO extends IDao {
     }
     
     getById(id) {
-        return this.products.find(product => product.id === id)
+        const product = this.products.find(product => product.id == id)
+        if(!product) { return { error: `Producto ${id} no encontrado` } }
+        else { return product }
     }
 
     deleteById(id) {
-        return this.products = this.products.filter(product => product.id !== id)
+        return this.products = this.products.filter(product => product.id != id)
     }
 
     update(data, id) {
-        const index = this.products.findIndex(product => product.id === id)
-        this.products[index] = data
+        const index = this.products.findIndex(product => product.id == id)
+        if (data.title) {this.products[index].title = data.title}
+        if (data.price) {this.products[index].price = data.price}
+        if (data.thumbnail) {this.products[index].thumbnail = data.thumbnail}
         return this.products[index]
     }
 
