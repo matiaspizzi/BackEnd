@@ -10,6 +10,8 @@ const loggerMiddleware = require('./middlewares/logger.middlewares.js')
 const logger = require('./utils/logger.utils.js')
 const http = require('http')
 const {Server: Socket} = require('socket.io')
+const { graphqlHTTP } = require('express-graphql')
+const { buildSchema } = require('graphql')
 
 const app = express();
 const server = http.createServer(app);
@@ -57,6 +59,44 @@ app.use(function (req, res, next) {
         return;
     }
 });
+
+const graphQlProductoSchema = buildSchema(`
+    type Producto {
+        id: ID!
+        nombre: String,
+        precio: Float,
+        thumbnail: String
+    }
+    input ProductoInput {
+        nombre: String,
+        precio: Float,
+        thumbnail: String
+    }
+    type Query {
+        getProducto(id: ID!): Producto,
+        getProductos: [Producto]
+    }
+    type Mutation {
+        saveProducto(datos: ProductoInput): Producto,
+        deleteProducto(id: ID!): Producto,
+        updateProducto(id: ID!, datos: ProductoInput): Producto
+    }`
+)
+
+const { getProductos, getProducto, updateProducto, deleteProducto, saveProducto } = require('./graphQl/main.js')
+
+app.use('/graphql', graphqlHTTP({
+    schema: graphQlProductoSchema,
+    rootValue: {
+        getProducto,
+        getProductos,
+        updateProducto,
+        deleteProducto,
+        saveProducto
+    },
+    graphiql: true
+    }))
+
 
 io.on('connection', async socket => {
     logger.info('Nuevo cliente conectado')
