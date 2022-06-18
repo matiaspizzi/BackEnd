@@ -17,7 +17,7 @@ const args = yargs
     .argv
 
 const config = {
-    persistencia: "memoria", // memoria, mongo o sqlite
+    persistencia: "mongo", // memoria, mongo o sqlite
     yarg: args,
     port: args.port,
     modo: args.modo,

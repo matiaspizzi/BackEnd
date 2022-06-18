@@ -1,44 +1,24 @@
-const crypto = require('crypto');
 
-class Producto {
-    constructor(id, {nombre, precio, thumbnail}) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.thumbnail = thumbnail;
-    }
+const ProductosController = require('../controllers/productos.controllers.js')
+
+async function getProductos () {
+    return await ProductosController.getAll()
 }
 
-const productosMap = {}
-
-function getProductos () {
-    const productos = Object.values(productosMap);
-    return productos
+async function getProducto ({id}) {
+    return await ProductosController.getById(id)
 }
 
-function getProducto ({id}) {
-    if(!productosMap[id]) throw new Error(`Producto ${id} no encontrado`)
-    return productosMap[id]
+async function saveProducto ({datos}) {
+    return await ProductosController.save(datos)
 }
 
-function saveProducto ({datos}) {
-    const id = crypto.randomBytes(10).toString('hex');
-    const producto = new Producto(id, datos);
-    productosMap[id] = producto;
-    return producto;
+async function updateProducto ({id, datos}) {
+    return await ProductosController.update(datos, id)
 }
 
-function updateProducto ({id, datos}) {
-    if(!productosMap[id]) throw new Error(`Producto ${id} no encontrado`)
-    const producto = new Producto(id, datos);
-    productosMap[id] = producto;
-    return producto;
-}
-
-function deleteProducto ({id}) {
-    if(!productosMap[id]) throw new Error(`Producto ${id} no encontrado`)
-    delete productosMap[id];
-    return {id}
+async function deleteProducto ({id}) {
+    return await ProductosController.deleteById(id)
 }
 
 module.exports = { getProductos, getProducto, saveProducto, updateProducto, deleteProducto }
