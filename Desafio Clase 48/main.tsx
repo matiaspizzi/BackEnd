@@ -11,7 +11,7 @@ const colores: Array<string> = [];
 app.handle("/", async (req) => {
     if (req.method === "POST") {
         const bodyForm = await req.formData();
-        const color = bodyForm!.value("name");
+        const color = bodyForm!.value("color");
         colores.push(color!)
     }
     await req.respond({
@@ -28,7 +28,7 @@ app.handle("/", async (req) => {
             <body style={{background: "black"}}>
                 <b><p style={{color: "white"}}>Ingrese un color (En inglés): </p></b>
                 <form action="/" method="post">
-                    <input type="text" name="name" placeholder="Color" required/>
+                    <input type="text" name="color" placeholder="Color" required/>
                     <input type="submit" value="Enviar" />
                 </form>
             </body>
